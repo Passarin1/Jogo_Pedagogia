@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jogo de Fonemas</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         TELA INICIAL
+    ========================== -->
+
+    <main id="tela-inicial" class="tela ativa">
+
+        <div class="container">
+
+            <div class="icone">🔤</div>
+
+            <h1>Jogo de Fonemas</h1>
+
+            <p class="subtitulo">
+                Aprenda os sons das letras brincando!
+            </p>
+
+            <button id="btn-iniciar" class="botao principal">
+                Começar
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         TELA DO JOGO
+    ========================== -->
+
+    <main id="tela-jogo" class="tela">
+
+        <div class="container jogo-container">
+
+            <div class="topo-jogo">
+
+                <span id="contador">
+                    Questão 1 de 5
+                </span>
+
+                <span id="pontuacao">
+                    Pontos: 0
+                </span>
+
+            </div>
+
+
+            <div class="pergunta">
+
+                <h2>
+                    Ouça o som e escolha a letra:
+                </h2>
+
+                <button id="btn-audio" class="botao audio">
+                    🔊 Ouvir som
+                </button>
+
+                <p id="status-audio">
+                    Clique no botão para ouvir.
+                </p>
+
+            </div>
+
+
+            <div id="alternativas" class="alternativas">
+
+                <!-- As alternativas serão criadas pelo JavaScript -->
+
+            </div>
+
+
+            <div id="feedback" class="feedback">
+
+                <!-- Mensagem de acerto ou erro -->
+
+            </div>
+
+
+            <button id="btn-proxima" class="botao proxima">
+                Próxima
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         TELA DE RESULTADO
+    ========================== -->
+
+    <main id="tela-resultado" class="tela">
+
+        <div class="container">
+
+            <div class="icone">🏆</div>
+
+            <h1>Parabéns!</h1>
+
+            <p>
+                Você terminou o desafio.
+            </p>
+
+            <div class="resultado">
+
+                <p>
+                    <strong>Acertos:</strong>
+                    <span id="resultado-acertos">0</span>
+                </p>
+
+                <p>
+                    <strong>Erros:</strong>
+                    <span id="resultado-erros">0</span>
+                </p>
+
+                <p>
+                    <strong>Pontuação:</strong>
+                    <span id="resultado-pontos">0</span>
+                </p>
+
+            </div>
+
+            <button id="btn-reiniciar" class="botao principal">
+                Jogar novamente
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

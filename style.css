@@ -1,0 +1,375 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f2f6ff;
+
+    color: #222;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   TELAS
+========================= */
+
+.tela {
+    display: none;
+
+    min-height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.tela.ativa {
+    display: flex;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+    width: 100%;
+    max-width: 600px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================
+   TÍTULOS
+========================= */
+
+h1 {
+    font-size: 42px;
+
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 26px;
+
+    margin-bottom: 25px;
+}
+
+.subtitulo {
+    font-size: 20px;
+
+    color: #666;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   ÍCONE
+========================= */
+
+.icone {
+    font-size: 70px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.botao {
+
+    border: none;
+
+    border-radius: 15px;
+
+    padding: 16px 30px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        opacity 0.15s;
+}
+
+.botao:hover {
+    transform: scale(1.03);
+}
+
+.botao:active {
+    transform: scale(0.97);
+}
+
+
+/* BOTÃO PRINCIPAL */
+
+.botao.principal {
+
+    background: #4f7cff;
+
+    color: white;
+
+    min-width: 220px;
+}
+
+
+/* BOTÃO DE ÁUDIO */
+
+.botao.audio {
+
+    background: #ffe082;
+
+    color: #333;
+
+    font-size: 22px;
+
+    margin-bottom: 10px;
+}
+
+
+/* BOTÃO PRÓXIMA */
+
+.botao.proxima {
+
+    background: #4f7cff;
+
+    color: white;
+
+    margin-top: 25px;
+
+    display: none;
+}
+
+
+/* =========================
+   TOPO DO JOGO
+========================= */
+
+.topo-jogo {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 35px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #555;
+}
+
+
+/* =========================
+   PERGUNTA
+========================= */
+
+.pergunta {
+
+    margin-bottom: 25px;
+}
+
+.status-audio {
+
+    color: #777;
+
+    font-size: 15px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   ALTERNATIVAS
+========================= */
+
+.alternativas {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+.alternativa {
+
+    background: #eef3ff;
+
+    border: 3px solid transparent;
+
+    border-radius: 18px;
+
+    padding: 25px 10px;
+
+    font-size: 35px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.alternativa:hover {
+
+    background: #dce6ff;
+
+    transform: translateY(-3px);
+}
+
+
+/* ALTERNATIVA CORRETA */
+
+.alternativa.correta {
+
+    background: #c8f7d2;
+
+    border-color: #42b85a;
+
+    color: #207a32;
+
+}
+
+
+/* ALTERNATIVA ERRADA */
+
+.alternativa.errada {
+
+    background: #ffd1d1;
+
+    border-color: #e34c4c;
+
+    color: #a32626;
+
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback {
+
+    min-height: 35px;
+
+    margin-top: 20px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.feedback.acerto {
+
+    color: #299640;
+}
+
+.feedback.erro {
+
+    color: #d13a3a;
+}
+
+
+/* =========================
+   RESULTADO
+========================= */
+
+.resultado {
+
+    background: #f4f6fb;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin: 30px 0;
+}
+
+.resultado p {
+
+    font-size: 21px;
+
+    margin: 12px 0;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 600px) {
+
+    .container {
+
+        padding: 25px;
+
+        border-radius: 20px;
+    }
+
+    h1 {
+
+        font-size: 32px;
+    }
+
+    h2 {
+
+        font-size: 22px;
+    }
+
+    .subtitulo {
+
+        font-size: 17px;
+    }
+
+    .alternativas {
+
+        grid-template-columns: 1fr;
+    }
+
+    .alternativa {
+
+        padding: 18px;
+
+        font-size: 30px;
+    }
+
+    .topo-jogo {
+
+        font-size: 14px;
+    }
+
+}
