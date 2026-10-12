@@ -980,13 +980,13 @@ Isso deixa muito mais fácil explicar para a professora **por que vocês estão 
 ### Próximo passo
 
 [ x ] 01 - Criar estrutura do projeto
-[ ] 02 - Tela inicial
-[ ] 03 - Botão JOGAR
-[ ] 04 - Primeira tela de aprendizagem
-[ ] 05 - Implementar áudio
-[ ] 06 - Testar áudio
-[ ] 07 - Primeira pergunta
-[ ] 08 - Sistema de acerto/erro
+[ x ] 02 - Tela inicial
+[ x ] 03 - Botão JOGAR
+[ x ] 04 - Primeira tela de aprendizagem
+[ x ] 05 - Implementar áudio
+[ x ] 06 - Testar áudio
+[ x ] 07 - Primeira pergunta
+[ x ] 08 - Sistema de acerto/erro
 [ ] 09 - Feedback
 [ ] 10 - Pontuação
 [ ] 11 - Banco de perguntas
