@@ -12,6 +12,7 @@ const perguntas = [
     {
         som: "A",
         audio: "audio/a.mp3",
+        fala:"á",
         alternativas: ["A", "B", "M"],
         resposta: "A"
     },
@@ -19,6 +20,7 @@ const perguntas = [
     {
         som: "B",
         audio: "audio/b.mp3",
+        fala:"bê",
         alternativas: ["A", "B", "P"],
         resposta: "B"
     },
@@ -220,29 +222,7 @@ function tocarAudio() {
        o arquivo correspondente.
     */
 
-    const audio =
-        new Audio(pergunta.audio);
-
-
-    audio.play()
-        .then(() => {
-
-            statusAudio.textContent =
-                "🔊 Reproduzindo...";
-
-        })
-        .catch(() => {
-
-            /*
-               Enquanto os arquivos de áudio
-               ainda não existirem, mostramos
-               uma mensagem amigável.
-            */
-
-            statusAudio.textContent =
-                "⚠️ Áudio ainda não disponível.";
-
-        });
+    reproduzirAudio(pergunta);
 
 }
 
@@ -415,3 +395,53 @@ btnReiniciar.addEventListener(
     "click",
     iniciarJogo
 );
+
+
+function reproduzirAudio(pergunta) {
+    const texto = pergunta.fala || pergunta.letra;
+
+    if (!texto) {
+        console.warn("Esta pergunta não possui texto para reprodução.");
+        return;
+    }
+
+    // Tenta usar o MP3 quando ele estiver disponível.
+    if (pergunta.audio) {
+        const audio = new Audio(pergunta.audio);
+        let fallbackExecutado = false;
+
+        function usarVozSintetizada() {
+            if (fallbackExecutado) return;
+            fallbackExecutado = true;
+            falarTexto(texto);
+        }
+
+        audio.addEventListener("error", usarVozSintetizada, { once: true });
+
+        audio.play().catch(() => {
+            usarVozSintetizada();
+        });
+
+        return;
+    }
+
+    // Sem arquivo de áudio: usa a voz do navegador.
+    falarTexto(texto);
+}
+
+function falarTexto(texto) {
+    if (!("speechSynthesis" in window)) {
+        alert("Seu navegador não oferece suporte à reprodução de voz.");
+        return;
+    }
+
+    // Interrompe a fala anterior para evitar sobreposição.
+    window.speechSynthesis.cancel();
+
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR";
+    fala.rate = 0.8;
+    fala.pitch = 1;
+
+    window.speechSynthesis.speak(fala);
+}
