@@ -28,6 +28,7 @@ const perguntas = [
     {
         som: "M",
         audio: "audio/m.mp3",
+        fala: "eme",
         alternativas: ["M", "P", "B"],
         resposta: "M"
     },
@@ -35,6 +36,7 @@ const perguntas = [
     {
         som: "P",
         audio: "audio/p.mp3",
+        fala:"pê",
         alternativas: ["B", "P", "A"],
         resposta: "P"
     },
@@ -42,6 +44,7 @@ const perguntas = [
     {
         som: "A",
         audio: "audio/a.mp3",
+        fala:"á",
         alternativas: ["M", "A", "P"],
         resposta: "A"
     }
