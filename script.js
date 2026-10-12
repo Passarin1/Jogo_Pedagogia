@@ -12,7 +12,7 @@ const perguntas = [
     {
         som: "A",
         audio: "audio/a.mp3",
-        fala:"á",
+        fala:"a",
         alternativas: ["A", "B", "M"],
         resposta: "A"
     },
@@ -44,7 +44,7 @@ const perguntas = [
     {
         som: "A",
         audio: "audio/a.mp3",
-        fala:"á",
+        fala:"a",
         alternativas: ["M", "A", "P"],
         resposta: "A"
     }
