@@ -282,25 +282,56 @@ h2 {
    FEEDBACK
 ========================= */
 
+
+/* =========================
+   FEEDBACK V1.2
+========================= */
+
 .feedback {
-
-    min-height: 35px;
-
-    margin-top: 20px;
-
-    font-size: 20px;
-
-    font-weight: bold;
+    min-height: 55px;
+    padding: 12px;
+    border-radius: 15px;
+    line-height: 1.4;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .feedback.acerto {
-
-    color: #299640;
+    color: #207a32;
+    background: #e4f9e8;
+    animation: aparecerFeedback 0.3s ease-out;
 }
 
 .feedback.erro {
+    color: #a32626;
+    background: #fff0f0;
+    animation: aparecerFeedback 0.3s ease-out;
+}
 
-    color: #d13a3a;
+.alternativa:disabled {
+    cursor: default;
+    opacity: 0.9;
+}
+
+.alternativa:disabled:hover {
+    transform: none;
+}
+
+.botao:focus-visible,
+.alternativa:focus-visible {
+    outline: 4px solid #243f99;
+    outline-offset: 4px;
+}
+
+@keyframes aparecerFeedback {
+    from {
+        opacity: 0.4;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 

@@ -64,6 +64,8 @@ let acertos = 0;
 
 let erros = 0;
 
+let sequenciaAcertos = 0;
+
 let respondeu = false;
 
 
@@ -126,6 +128,8 @@ function iniciarJogo() {
     acertos = 0;
 
     erros = 0;
+
+    sequenciaAcertos = 0;
 
     telaInicial.classList.remove("ativa");
 
@@ -236,99 +240,70 @@ function tocarAudio() {
 
 function verificarResposta(letra, botaoClicado) {
 
-    /*
-       Impede que a criança responda
-       várias vezes à mesma questão.
-    */
-
     if (respondeu) {
         return;
     }
 
-
     respondeu = true;
 
+    const pergunta = perguntas[perguntaAtual];
 
-    const pergunta =
-        perguntas[perguntaAtual];
-
-
-    /* DESABILITAR TODAS AS ALTERNATIVAS */
-
-    const botoes =
-        document.querySelectorAll(".alternativa");
-
+    const botoes = document.querySelectorAll(".alternativa");
 
     botoes.forEach(botao => {
-
         botao.disabled = true;
-
     });
-
-
-    /* VERIFICAR */
 
     if (letra === pergunta.resposta) {
 
-        /* ACERTO */
-
         pontos += 10;
-
         acertos++;
+        sequenciaAcertos++;
 
         botaoClicado.classList.add("correta");
 
-        feedback.textContent =
-            "⭐ Muito bem! Você acertou!";
+        const mensagensAcerto = [
+            "⭐ Muito bem! Você acertou!",
+            "🎉 Excelente! Você encontrou a letra!",
+            "👏 Isso mesmo! Continue assim!",
+            "🌟 Mandou bem! Mais um acerto!"
+        ];
 
+        let mensagem = mensagensAcerto[
+            Math.floor(Math.random() * mensagensAcerto.length)
+        ];
+
+        if (sequenciaAcertos === 3) {
+            mensagem += " 🔥 Três acertos seguidos!";
+        } else if (sequenciaAcertos > 3 && sequenciaAcertos % 3 === 0) {
+            mensagem += ` 🔥 ${sequenciaAcertos} acertos seguidos!`;
+        }
+
+        feedback.textContent = mensagem;
         feedback.classList.add("acerto");
-
 
     } else {
 
-        /* ERRO */
-
         erros++;
+        sequenciaAcertos = 0;
 
         botaoClicado.classList.add("errada");
 
         feedback.textContent =
-            `🤔 Quase! A resposta era ${pergunta.resposta}.`;
+            "🤔 Quase! Escute novamente e continue aprendendo.";
 
         feedback.classList.add("erro");
 
-
-        /*
-           Destacar a resposta correta
-        */
-
         botoes.forEach(botao => {
-
-            if (
-                botao.textContent ===
-                pergunta.resposta
-            ) {
-
+            if (botao.textContent === pergunta.resposta) {
                 botao.classList.add("correta");
-
             }
-
         });
-
     }
 
+    pontuacao.textContent = `Pontos: ${pontos}`;
 
-    /* ATUALIZAR PONTUAÇÃO */
-
-    pontuacao.textContent =
-        `Pontos: ${pontos}`;
-
-
-    /* MOSTRAR BOTÃO PRÓXIMA */
-
-    btnProxima.style.display =
-        "inline-block";
-
+    btnProxima.style.display = "inline-block";
 }
 
 
