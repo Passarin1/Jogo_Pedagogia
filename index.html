@@ -1,147 +1,243 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Jogo de Fonemas</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5267d8">
+  <title>Jogo de Fonemas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
+  <header class="topbar">
+    <a class="brand" href="#" id="brand-home">
+      <span class="brand-mark">Aa</span>
+      <span>Jogo de Fonemas</span>
+    </a>
+    <button class="btn btn-ghost btn-small" id="btn-professor-topo">
+      Área do professor
+    </button>
+  </header>
 
-    <!-- =========================
-         TELA INICIAL
-    ========================== -->
-
-    <main id="tela-inicial" class="tela ativa">
-
-        <div class="container">
-
-            <div class="icone">🔤</div>
-
-            <h1>Jogo de Fonemas</h1>
-
-            <p class="subtitulo">
-                Aprenda os sons das letras brincando!
-            </p>
-
-            <button id="btn-iniciar" class="botao principal">
-                Começar
-            </button>
-
+  <main class="app-shell">
+    <section id="tela-inicial" class="screen hero-screen">
+      <div class="hero-copy">
+        <span class="eyebrow">APRENDER PODE SER UMA AVENTURA</span>
+        <h1>Descubra os sons.<br><span>Encontre as letras!</span></h1>
+        <p>
+          Uma jornada divertida para ouvir sons, reconhecer letras,
+          descobrir palavras e praticar a escrita.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large" id="btn-jogar">
+            Começar a jornada →
+          </button>
+          <button class="btn btn-secondary btn-large" id="btn-como-jogar">
+            Como jogar?
+          </button>
         </div>
-
-    </main>
-
-
-    <!-- =========================
-         TELA DO JOGO
-    ========================== -->
-
-    <main id="tela-jogo" class="tela">
-
-        <div class="container jogo-container">
-
-            <div class="topo-jogo">
-
-                <span id="contador">
-                    Questão 1 de 5
-                </span>
-
-                <span id="pontuacao">
-                    Pontos: 0
-                </span>
-
-            </div>
-
-
-            <div class="pergunta">
-
-                <h2>
-                    Ouça o som e escolha a letra:
-                </h2>
-
-                <button id="btn-audio" class="botao audio">
-                    🔊 Ouvir som
-                </button>
-
-                <p id="status-audio">
-                    Clique no botão para ouvir.
-                </p>
-
-            </div>
-
-
-            <div id="alternativas" class="alternativas">
-
-                <!-- As alternativas serão criadas pelo JavaScript -->
-
-            </div>
-
-
-            <div id="feedback" class="feedback">
-
-                <!-- Mensagem de acerto ou erro -->
-
-            </div>
-
-
-            <button id="btn-proxima" class="botao proxima">
-                Próxima
-            </button>
-
+        <div class="hero-note">
+          <span class="note-dot"></span>
+          Você pode ouvir quantas vezes quiser.
         </div>
+      </div>
 
-    </main>
-
-
-    <!-- =========================
-         TELA DE RESULTADO
-    ========================== -->
-
-    <main id="tela-resultado" class="tela">
-
-        <div class="container">
-
-            <div class="icone">🏆</div>
-
-            <h1>Parabéns!</h1>
-
-            <p>
-                Você terminou o desafio.
-            </p>
-
-            <div class="resultado">
-
-                <p>
-                    <strong>Acertos:</strong>
-                    <span id="resultado-acertos">0</span>
-                </p>
-
-                <p>
-                    <strong>Erros:</strong>
-                    <span id="resultado-erros">0</span>
-                </p>
-
-                <p>
-                    <strong>Pontuação:</strong>
-                    <span id="resultado-pontos">0</span>
-                </p>
-
-            </div>
-
-            <button id="btn-reiniciar" class="botao principal">
-                Jogar novamente
-            </button>
-
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="letter-tile tile-a">A</div>
+        <div class="letter-tile tile-b">B</div>
+        <div class="letter-tile tile-m">M</div>
+        <div class="letter-tile tile-p">P</div>
+        <div class="mascot">
+          <span class="mascot-eyes">● ●</span>
+          <span class="mascot-smile">⌣</span>
+          <span class="mascot-book">📖</span>
         </div>
+        <div class="floating-star star-one">✦</div>
+        <div class="floating-star star-two">✧</div>
+      </div>
+    </section>
 
-    </main>
+    <section id="tela-como-jogar" class="screen hidden">
+      <div class="section-heading">
+        <span class="eyebrow">PASSO A PASSO</span>
+        <h1>Como jogar?</h1>
+        <p>Você vai passar por cinco atividades. Escute, observe e escolha com calma.</p>
+      </div>
 
+      <div class="how-grid">
+        <article class="info-card">
+          <span class="step-icon">🔊</span>
+          <h3>1. Aprender</h3>
+          <p>Conheça as letras e ouça seus nomes.</p>
+        </article>
+        <article class="info-card">
+          <span class="step-icon">🔎</span>
+          <h3>2. Reconhecer</h3>
+          <p>Ouça e escolha a letra correspondente.</p>
+        </article>
+        <article class="info-card">
+          <span class="step-icon">🧩</span>
+          <h3>3. Associar</h3>
+          <p>Descubra qual palavra começa com a letra.</p>
+        </article>
+        <article class="info-card">
+          <span class="step-icon">✏️</span>
+          <h3>4. Escrever</h3>
+          <p>Identifique a letra e pratique digitando-a.</p>
+        </article>
+        <article class="info-card">
+          <span class="step-icon">🏆</span>
+          <h3>5. Desafio</h3>
+          <p>Mostre o que aprendeu com menos dicas.</p>
+        </article>
+      </div>
 
-    <script src="script.js"></script>
+      <div class="center-actions">
+        <button class="btn btn-primary" id="btn-comecar-como">
+          Entendi, vamos jogar!
+        </button>
+        <button class="btn btn-ghost" data-go-home>Voltar</button>
+      </div>
+    </section>
 
+    <section id="tela-selecao" class="screen hidden">
+      <div class="section-heading">
+        <span class="eyebrow">SUA JORNADA</span>
+        <h1>Escolha uma atividade</h1>
+        <p>Complete cada etapa para liberar a próxima.</p>
+      </div>
+      <div id="progresso-jornada" class="journey-progress"></div>
+      <div id="lista-fases" class="phase-grid"></div>
+      <div class="center-actions">
+        <button class="btn btn-ghost" data-go-home>Voltar ao início</button>
+      </div>
+    </section>
+
+    <section id="tela-jogo" class="screen hidden">
+      <div class="game-topline">
+        <button class="btn btn-ghost btn-small" id="btn-sair-fase">
+          ← Atividades
+        </button>
+        <div class="game-stats">
+          <span id="fase-atual-label">Fase 1</span>
+          <span class="stat-pill">⭐ <b id="pontos-atual">0</b></span>
+        </div>
+      </div>
+
+      <div class="question-progress"><div id="barra-progresso"></div></div>
+      <div class="question-meta">
+        <span id="pergunta-contador">Atividade 1</span>
+        <span id="tentativas-label">Pode tentar novamente</span>
+      </div>
+
+      <div id="conteudo-pergunta" class="question-card"></div>
+      <div id="feedback" class="feedback hidden" role="status" aria-live="polite"></div>
+
+      <div class="game-footer">
+        <button class="btn btn-secondary" id="btn-ouvir">🔊 Ouvir novamente</button>
+        <button class="btn btn-primary" id="btn-verificar">Conferir resposta</button>
+        <button class="btn btn-primary hidden" id="btn-proxima">Próxima →</button>
+      </div>
+    </section>
+
+    <section id="tela-resultado" class="screen hidden">
+      <div class="result-hero">
+        <div class="result-medal">🏆</div>
+        <span class="eyebrow">JORNADA CONCLUÍDA</span>
+        <h1 id="resultado-titulo">Parabéns!</h1>
+        <p id="resultado-mensagem">Você terminou a atividade.</p>
+      </div>
+
+      <div class="result-stats">
+        <article class="result-stat">
+          <span>⭐</span><strong id="resultado-pontos">0</strong><small>Pontos</small>
+        </article>
+        <article class="result-stat">
+          <span>✅</span><strong id="resultado-acertos">0</strong><small>Acertos</small>
+        </article>
+        <article class="result-stat">
+          <span>🔁</span><strong id="resultado-erros">0</strong><small>Tentativas incorretas</small>
+        </article>
+        <article class="result-stat">
+          <span>📈</span><strong id="resultado-percentual">0%</strong><small>Precisão</small>
+        </article>
+      </div>
+
+      <div class="result-detail" id="resultado-detalhe"></div>
+
+      <div class="center-actions">
+        <button class="btn btn-primary" id="btn-voltar-fases">Ver jornada</button>
+        <button class="btn btn-secondary" id="btn-jogar-novamente">Jogar novamente</button>
+      </div>
+    </section>
+
+    <section id="tela-professor" class="screen hidden">
+      <div class="section-heading teacher-heading">
+        <span class="eyebrow">ACOMPANHAMENTO</span>
+        <h1>Área do professor</h1>
+        <p>
+          Veja os resultados registrados neste navegador.
+          Esta versão não envia dados para a internet.
+        </p>
+      </div>
+
+      <div class="teacher-toolbar">
+        <label class="field-label" for="filtro-aluno">
+          Filtrar por nome
+          <input id="filtro-aluno" type="search" placeholder="Digite o nome do aluno">
+        </label>
+        <button class="btn btn-secondary" id="btn-exportar">Exportar CSV</button>
+        <button class="btn btn-ghost" id="btn-limpar-resultados">Limpar histórico</button>
+      </div>
+
+      <form id="form-aluno" class="student-form">
+        <label class="field-label" for="nome-aluno">
+          Nome do aluno (opcional)
+          <input id="nome-aluno" type="text" maxlength="60" placeholder="Ex.: Ana">
+        </label>
+        <p>O nome será associado às próximas partidas neste navegador.</p>
+        <button class="btn btn-primary" type="submit">Salvar nome</button>
+      </form>
+
+      <div class="teacher-summary" id="resumo-professor"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Atividade</th>
+              <th>Acertos</th>
+              <th>Tentativas incorretas</th>
+              <th>Pontos</th>
+              <th>Precisão</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-resultados"></tbody>
+        </table>
+      </div>
+
+      <div class="center-actions">
+        <button class="btn btn-ghost" data-go-home>Voltar ao início</button>
+        <button class="btn btn-primary" id="btn-jogar-professor">Iniciar jogo</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Jogo de Fonemas</span>
+    <span>Aprender • Reconhecer • Associar • Escrever • Desafiar-se</span>
+  </footer>
+
+  <dialog id="modal-mensagem" class="modal">
+    <div class="modal-icon">💡</div>
+    <h2 id="modal-titulo">Dica</h2>
+    <p id="modal-texto"></p>
+    <button class="btn btn-primary" id="btn-fechar-modal">Vamos lá!</button>
+  </dialog>
 </body>
 </html>

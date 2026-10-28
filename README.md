@@ -987,9 +987,9 @@ Isso deixa muito mais fácil explicar para a professora **por que vocês estão 
 [ x ] 06 - Testar áudio
 [ x ] 07 - Primeira pergunta
 [ x ] 08 - Sistema de acerto/erro
-[ ] 09 - Feedback
-[ ] 10 - Pontuação
-[ ] 11 - Banco de perguntas
+[ x ] 09 - Feedback
+[ x ] 10 - Pontuação
+[ x ] 11 - Banco de perguntas
 [ ] 12 - Fase 1 completa
 [ ] 13 - Fase 2
 [ ] 14 - Fase 3
