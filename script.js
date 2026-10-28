@@ -53,64 +53,33 @@
   // A equipe pedagógica deve revisar os áudios antes do uso avaliativo.
 
   const LETRAS = [
-    {
-      letra: "A",
-      fala: "á",
-      palavra: "abelha",
-      emoji: "🐝",
-      alternativas: ["A", "B", "M", "P"]
-    },
-    {
-      letra: "B",
-      fala: "bê",
-      palavra: "bola",
-      emoji: "⚽",
-      alternativas: ["A", "B", "D", "P"]
-    },
-    {
-      letra: "D",
-      fala: "dê",
-      palavra: "dado",
-      emoji: "🎲",
-      alternativas: ["B", "D", "P", "M"]
-    },
-    {
-      letra: "F",
-      fala: "efe",
-      palavra: "foca",
-      emoji: "🦭",
-      alternativas: ["F", "S", "T", "P"]
-    },
-    {
-      letra: "M",
-      fala: "eme",
-      palavra: "macaco",
-      emoji: "🐒",
-      alternativas: ["M", "N", "B", "P"]
-    },
-    {
-      letra: "P",
-      fala: "pê",
-      palavra: "pato",
-      emoji: "🦆",
-      alternativas: ["B", "P", "D", "T"]
-    },
-    {
-      letra: "S",
-      fala: "esse",
-      palavra: "sapo",
-      emoji: "🐸",
-      alternativas: ["S", "F", "C", "T"]
-    },
-    {
-      letra: "T",
-      fala: "tê",
-      palavra: "tatu",
-      emoji: "🦔",
-      alternativas: ["T", "P", "F", "D"]
-    }
-  ];
-
+    { letra: "A", fala: "A", palavra: "Abelha", emoji: "🐝" },
+    { letra: "B", fala: "Bê", palavra: "Bola", emoji: "⚽" },
+    { letra: "C", fala: "Cê", palavra: "Casa", emoji: "🏠" },
+    { letra: "D", fala: "Dê", palavra: "Dado", emoji: "🎲" },
+    { letra: "E", fala: "E", palavra: "Elefante", emoji: "🐘" },
+    { letra: "F", fala: "Éfe", palavra: "Faca", emoji: "🔪" },
+    { letra: "G", fala: "Gê", palavra: "Gato", emoji: "🐱" },
+    { letra: "H", fala: "Agá", palavra: "Hipopótamo", emoji: "🦛" },
+    { letra: "I", fala: "I", palavra: "Igreja", emoji: "⛪" },
+    { letra: "J", fala: "Jota", palavra: "Jacaré", emoji: "🐊" },
+    { letra: "K", fala: "Cá", palavra: "Kiwi", emoji: "🥝" },
+    { letra: "L", fala: "Éle", palavra: "Leão", emoji: "🦁" },
+    { letra: "M", fala: "Ême", palavra: "Macaco", emoji: "🐒" },
+    { letra: "N", fala: "Êne", palavra: "Navio", emoji: "🚢" },
+    { letra: "O", fala: "O", palavra: "Ovo", emoji: "🥚" },
+    { letra: "P", fala: "Pê", palavra: "Pato", emoji: "🦆" },
+    { letra: "Q", fala: "Quê", palavra: "Queijo", emoji: "🧀" },
+    { letra: "R", fala: "Érre", palavra: "Rato", emoji: "🐭" },
+    { letra: "S", fala: "Ésse", palavra: "Sapo", emoji: "🐸" },
+    { letra: "T", fala: "Tê", palavra: "Tartaruga", emoji: "🐢" },
+    { letra: "U", fala: "U", palavra: "Uva", emoji: "🍇" },
+    { letra: "V", fala: "Vê", palavra: "Vaca", emoji: "🐄" },
+    { letra: "W", fala: "Dáblio", palavra: "Waffle", emoji: "🧇" },
+    { letra: "X", fala: "Xis", palavra: "Xícara", emoji: "☕" },
+    { letra: "Y", fala: "Ípsilon", palavra: "Yoga", emoji: "🧘" },
+    { letra: "Z", fala: "Zê", palavra: "Zebra", emoji: "🦓" }
+];
   // ==========================================
   // 3. ARMAZENAMENTO
   // ==========================================
@@ -398,7 +367,7 @@
     sequencia = 0;
     melhorSequencia = 0;
 
-    perguntasAtuais = embaralhar(LETRAS).slice(0, 5);
+    perguntasAtuais = [...LETRAS];
 
     mostrarTela("tela-jogo");
     renderizarPergunta();
@@ -408,61 +377,75 @@
   // 10. ALTERNATIVAS DAS PERGUNTAS
   // ==========================================
 
-  function construirAlternativas(item, tipo) {
-    let alternativas;
+  
+function construirAlternativas(item, tipo) {
+  let alternativas;
 
-    if (tipo === "palavra") {
-      alternativas = embaralhar([
-        ...LETRAS.filter(
-          letra => letra.letra !== item.letra
-        ).slice(0, 3),
-        item
-      ]);
-
-      return `
-        <div class="choices">
-          ${alternativas.map((opcao) => `
-            <button
-              class="choice ${
-                selecao === opcao.letra ? "selected" : ""
-              }"
-              data-resposta="${opcao.letra}"
-              aria-label="${opcao.palavra}"
-            >
-              <span class="word-choice">
-                <span class="word-picture">${opcao.emoji}</span>
-                <span class="word-name">${opcao.palavra}</span>
-              </span>
-            </button>
-          `).join("")}
-        </div>
-      `;
-    }
+  if (tipo === "palavra") {
+    // A resposta certa e três palavras de outras letras.
+    const distratoras = embaralhar(
+      LETRAS.filter(
+        letra => letra.letra !== item.letra
+      )
+    ).slice(0, 3);
 
     alternativas = embaralhar([
-      ...new Set([
-        item.letra,
-        ...item.alternativas.filter(
-          letra => letra !== item.letra
-        ).slice(0, 3)
-      ])
+      ...distratoras,
+      item
     ]);
 
     return `
       <div class="choices">
-        ${alternativas.map((letra) => `
+        ${alternativas.map(opcao => `
           <button
             class="choice ${
-              selecao === letra ? "selected" : ""
+              selecao === opcao.letra ? "selected" : ""
             }"
-            data-resposta="${letra}"
+            data-resposta="${opcao.letra}"
+            aria-label="${opcao.letra}: ${opcao.palavra}"
           >
-            ${letra}
+            <span class="word-choice">
+              <span class="word-picture" aria-hidden="true">
+                ${opcao.emoji}
+              </span>
+              <span class="word-name">
+                ${opcao.palavra}
+              </span>
+            </span>
           </button>
         `).join("")}
       </div>
     `;
   }
+
+  // A resposta certa e três letras diferentes.
+  const outrasLetras = embaralhar(
+    LETRAS.filter(
+      letra => letra.letra !== item.letra
+    )
+  ).slice(0, 3);
+
+  alternativas = embaralhar([
+    item.letra,
+    ...outrasLetras.map(letra => letra.letra)
+  ]);
+
+  return `
+    <div class="choices">
+      ${alternativas.map(letra => `
+        <button
+          class="choice ${
+            selecao === letra ? "selected" : ""
+          }"
+          data-resposta="${letra}"
+          aria-label="Letra ${letra}"
+        >
+          ${letra}
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
 
   // ==========================================
   // 11. MOSTRAR UMA PERGUNTA
