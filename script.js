@@ -48,25 +48,21 @@
   // 2. BANCO DE PERGUNTAS
   // ==========================================
 
-  // A voz atual fala o nome da letra.
-  // O nome da letra não é necessariamente seu fonema isolado.
-  // A equipe pedagógica deve revisar os áudios antes do uso avaliativo.
-
   const LETRAS = [
-    { letra: "A", fala: "A", palavra: "Abelha", emoji: "🐝" },
-    { letra: "B", fala: "Bê", palavra: "Bola", emoji: "⚽" },
-    { letra: "C", fala: "Cê", palavra: "Casa", emoji: "🏠" },
-    { letra: "D", fala: "Dê", palavra: "Dado", emoji: "🎲" },
-    { letra: "E", fala: "E", palavra: "Elefante", emoji: "🐘" },
-    { letra: "F", fala: "Éfe", palavra: "Faca", emoji: "🔪" },
-    { letra: "G", fala: "Gê", palavra: "Gato", emoji: "🐱" },
-    { letra: "H", fala: "Agá", palavra: "Hipopótamo", emoji: "🦛" },
-    { letra: "I", fala: "I", palavra: "Igreja", emoji: "⛪" },
-    { letra: "J", fala: "Jota", palavra: "Jacaré", emoji: "🐊" },
-    { letra: "K", fala: "Cá", palavra: "Kiwi", emoji: "🥝" },
-    { letra: "L", fala: "Éle", palavra: "Leão", emoji: "🦁" },
-    { letra: "M", fala: "Ême", palavra: "Macaco", emoji: "🐒" },
-    { letra: "N", fala: "Êne", palavra: "Navio", emoji: "🚢" },
+    { letra: "A", fala: "A", palavra: "Abelha", emoji: "🐝", audio: "audio/A.mp3" },
+    { letra: "B", fala: "Bê", palavra: "Bola", emoji: "⚽", audio: "audio/B-1.mp3" },
+    { letra: "C", fala: "Cê", palavra: "Casa", emoji: "🏠", audio: "audio/C-1.mp3" },
+    { letra: "D", fala: "Dê", palavra: "Dado", emoji: "🎲", audio: "audio/D.mp3" },
+    { letra: "E", fala: "E", palavra: "Elefante", emoji: "🐘", audio: "audio/E-1.mp3" },
+    { letra: "F", fala: "Éfe", palavra: "Faca", emoji: "🔪", audio: "audio/F.mp3" },
+    { letra: "G", fala: "Gê", palavra: "Gato", emoji: "🐱", audio: "audio/G.mp3" },
+    { letra: "H", fala: "Agá", palavra: "Hipopótamo", emoji: "🦛", audio: "audio/H.mp3" },
+    { letra: "I", fala: "I", palavra: "Igreja", emoji: "⛪", audio: "audio/I.mp3" },
+    { letra: "J", fala: "Jota", palavra: "Jacaré", emoji: "🐊", audio: "audio/J.mp3" },
+    { letra: "K", fala: "Cá", palavra: "Kiwi", emoji: "🥝", audio: "audio/K.mp3" },
+    { letra: "L", fala: "Éle", palavra: "Leão", emoji: "🦁", audio: "audio/L.mp3" },
+    { letra: "M", fala: "Ême", palavra: "Macaco", emoji: "🐒", audio: "audio/M.mp3" },
+    { letra: "N", fala: "Êne", palavra: "Navio", emoji: "🚢", audio: "audio/N.mp3" },
     { letra: "O", fala: "O", palavra: "Ovo", emoji: "🥚" },
     { letra: "P", fala: "Pê", palavra: "Pato", emoji: "🦆" },
     { letra: "Q", fala: "Quê", palavra: "Queijo", emoji: "🧀" },
@@ -79,13 +75,13 @@
     { letra: "X", fala: "Xis", palavra: "Xícara", emoji: "☕" },
     { letra: "Y", fala: "Ípsilon", palavra: "Yoga", emoji: "🧘" },
     { letra: "Z", fala: "Zê", palavra: "Zebra", emoji: "🦓" }
-];
+  ];
+
   // ==========================================
   // 3. ARMAZENAMENTO
   // ==========================================
 
-  const STORAGE_KEY = "jogoFonemasResultadosV11";
-  const PROGRESS_KEY = "jogoFonemasProgressoV11";
+  const STORAGE_KEY = "jogoFonemasResultadosV12";
   const NAME_KEY = "jogoFonemasNomeAlunoV11";
 
   const $ = (id) => document.getElementById(id);
@@ -108,12 +104,7 @@
   let perguntasAtuais = [];
   let selecao = null;
   let respondida = false;
-
-  let pontosPartida = 0;
   let acertosPartida = 0;
-  let errosPartida = 0;
-  let sequencia = 0;
-  let melhorSequencia = 0;
 
   let nomeAluno = localStorage.getItem(NAME_KEY) || "";
 
@@ -161,7 +152,6 @@
       return;
     }
 
-    // Interrompe qualquer fala anterior.
     window.speechSynthesis.cancel();
 
     const fala = new SpeechSynthesisUtterance(texto);
@@ -190,7 +180,6 @@
   function reproduzirAudio(item) {
     const texto = item.fala || item.letra;
 
-    // Se houver MP3 configurado, tenta reproduzi-lo.
     if (item.audio) {
       const audio = new Audio(item.audio);
       let fallbackUsado = false;
@@ -212,7 +201,6 @@
       return;
     }
 
-    // Sem MP3, utiliza a voz do navegador.
     falarTexto(texto);
   }
 
@@ -245,43 +233,6 @@
     }
   }
 
-  function progressoSalvo() {
-    try {
-      return JSON.parse(
-        localStorage.getItem(PROGRESS_KEY)
-      ) || {
-        desbloqueada: 1,
-        concluidas: []
-      };
-    } catch {
-      return {
-        desbloqueada: 1,
-        concluidas: []
-      };
-    }
-  }
-
-  function salvarProgresso() {
-    const progresso = progressoSalvo();
-
-    if (!progresso.concluidas.includes(faseAtual)) {
-      progresso.concluidas.push(faseAtual);
-    }
-
-    progresso.desbloqueada = Math.min(
-      5,
-      Math.max(
-        progresso.desbloqueada || 1,
-        faseAtual + 1
-      )
-    );
-
-    localStorage.setItem(
-      PROGRESS_KEY,
-      JSON.stringify(progresso)
-    );
-  }
-
   function escapar(texto) {
     return String(texto).replace(
       /[&<>"']/g,
@@ -296,51 +247,30 @@
   }
 
   // ==========================================
-  // 8. SELEÇÃO E PROGRESSO DAS FASES
+  // 8. SELEÇÃO DAS FASES
   // ==========================================
 
   function renderizarFases() {
-    const progresso = progressoSalvo();
+    $("progresso-jornada").innerHTML = "";
 
-    $("progresso-jornada").innerHTML = `
-      <div style="width:${
-        (progresso.concluidas.length / 5) * 100
-      }%"></div>
-    `;
+    $("lista-fases").innerHTML = FASES.map((fase) => `
+      <button
+        class="phase-card"
+        data-fase="${fase.id}"
+      >
+        <span class="phase-emoji">
+          ${fase.emoji}
+        </span>
 
-    $("lista-fases").innerHTML = FASES.map((fase) => {
-      const bloqueada =
-        fase.id > progresso.desbloqueada;
+        <h3>${fase.id}. ${fase.nome}</h3>
 
-      const concluida =
-        progresso.concluidas.includes(fase.id);
+        <p>${fase.descricao}</p>
 
-      return `
-        <button
-          class="phase-card ${bloqueada ? "locked" : ""}"
-          data-fase="${fase.id}"
-          ${bloqueada ? "disabled" : ""}
-        >
-          <span class="phase-emoji">
-            ${bloqueada ? "🔒" : fase.emoji}
-          </span>
-
-          <h3>${fase.id}. ${fase.nome}</h3>
-
-          <p>${fase.descricao}</p>
-
-          <span class="phase-status">
-            ${
-              concluida
-                ? "✓ Concluída"
-                : bloqueada
-                  ? "Bloqueada"
-                  : "Disponível"
-            }
-          </span>
-        </button>
-      `;
-    }).join("");
+        <span class="phase-status">
+          Disponível
+        </span>
+      </button>
+    `).join("");
 
     $("lista-fases")
       .querySelectorAll("[data-fase]")
@@ -360,14 +290,9 @@
     indice = 0;
     selecao = null;
     respondida = false;
-
-    pontosPartida = 0;
     acertosPartida = 0;
-    errosPartida = 0;
-    sequencia = 0;
-    melhorSequencia = 0;
 
-    perguntasAtuais = [...LETRAS];
+    perguntasAtuais = embaralhar(LETRAS);
 
     mostrarTela("tela-jogo");
     renderizarPergunta();
@@ -377,75 +302,73 @@
   // 10. ALTERNATIVAS DAS PERGUNTAS
   // ==========================================
 
-  
-function construirAlternativas(item, tipo) {
-  let alternativas;
+  function construirAlternativas(item, tipo) {
+    let alternativas;
 
-  if (tipo === "palavra") {
-    // A resposta certa e três palavras de outras letras.
-    const distratoras = embaralhar(
+    if (tipo === "palavra") {
+      const distratoras = embaralhar(
+        LETRAS.filter(
+          letra => letra.letra !== item.letra
+        )
+      ).slice(0, 3);
+
+      alternativas = embaralhar([
+        ...distratoras,
+        item
+      ]);
+
+      return `
+        <div class="choices">
+          ${alternativas.map(opcao => `
+            <button
+              class="choice ${
+                selecao === opcao.letra ? "selected" : ""
+              }"
+              data-resposta="${opcao.letra}"
+              aria-label="${opcao.letra}: ${opcao.palavra}"
+            >
+              <span class="word-choice">
+                <span class="word-picture" aria-hidden="true">
+                  ${opcao.emoji}
+                </span>
+
+                <span class="word-name">
+                  ${opcao.palavra}
+                </span>
+              </span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    const outrasLetras = embaralhar(
       LETRAS.filter(
         letra => letra.letra !== item.letra
       )
     ).slice(0, 3);
 
     alternativas = embaralhar([
-      ...distratoras,
-      item
+      item.letra,
+      ...outrasLetras.map(letra => letra.letra)
     ]);
 
     return `
       <div class="choices">
-        ${alternativas.map(opcao => `
+        ${alternativas.map(letra => `
           <button
             class="choice ${
-              selecao === opcao.letra ? "selected" : ""
+              selecao === letra ? "selected" : ""
             }"
-            data-resposta="${opcao.letra}"
-            aria-label="${opcao.letra}: ${opcao.palavra}"
+            data-resposta="${letra}"
+            aria-label="Letra ${letra}"
           >
-            <span class="word-choice">
-              <span class="word-picture" aria-hidden="true">
-                ${opcao.emoji}
-              </span>
-              <span class="word-name">
-                ${opcao.palavra}
-              </span>
-            </span>
+            ${letra}
           </button>
         `).join("")}
       </div>
     `;
   }
-
-  // A resposta certa e três letras diferentes.
-  const outrasLetras = embaralhar(
-    LETRAS.filter(
-      letra => letra.letra !== item.letra
-    )
-  ).slice(0, 3);
-
-  alternativas = embaralhar([
-    item.letra,
-    ...outrasLetras.map(letra => letra.letra)
-  ]);
-
-  return `
-    <div class="choices">
-      ${alternativas.map(letra => `
-        <button
-          class="choice ${
-            selecao === letra ? "selected" : ""
-          }"
-          data-resposta="${letra}"
-          aria-label="Letra ${letra}"
-        >
-          ${letra}
-        </button>
-      `).join("")}
-    </div>
-  `;
-}
 
   // ==========================================
   // 11. MOSTRAR UMA PERGUNTA
@@ -461,15 +384,11 @@ function construirAlternativas(item, tipo) {
     $("fase-atual-label").textContent =
       `${fase.emoji} ${fase.nome}`;
 
-    $("pontos-atual").textContent = pontosPartida;
-
     $("pergunta-contador").textContent =
       `Atividade ${indice + 1} de ${perguntasAtuais.length}`;
 
     $("tentativas-label").textContent =
-      faseAtual === 5
-        ? "Desafio final"
-        : "Pode tentar novamente";
+      "Pode tentar novamente";
 
     $("barra-progresso").style.width =
       `${(indice / perguntasAtuais.length) * 100}%`;
@@ -485,13 +404,17 @@ function construirAlternativas(item, tipo) {
     // FASE 1: APRENDER
     if (faseAtual === 1) {
       conteudo = `
-        <span class="question-kicker">Conheça a letra</span>
+        <span class="question-kicker">
+          Conheça a letra
+        </span>
 
         <h2 class="question-title">
           Vamos aprender esta letra?
         </h2>
 
-        <div class="big-letter">${item.letra}</div>
+        <div class="big-letter">
+          ${item.letra}
+        </div>
 
         <button class="sound-button" data-ouvir-item>
           🔊 Ouvir "${item.fala}"
@@ -499,7 +422,10 @@ function construirAlternativas(item, tipo) {
 
         <p>Repita o áudio quantas vezes quiser.</p>
 
-        <button class="btn btn-primary" id="btn-aprendi">
+        <button
+          class="btn btn-primary"
+          id="btn-aprendi"
+        >
           Aprendi esta letra →
         </button>
       `;
@@ -531,14 +457,20 @@ function construirAlternativas(item, tipo) {
     // FASE 3: ASSOCIAR
     else if (faseAtual === 3) {
       conteudo = `
-        <span class="question-kicker">Sons e palavras</span>
+        <span class="question-kicker">
+          Sons e palavras
+        </span>
 
         <h2 class="question-title">
           Qual palavra começa com a letra
-          <span style="color:var(--primary)">${item.letra}</span>?
+          <span style="color:var(--primary)">
+            ${item.letra}
+          </span>?
         </h2>
 
-        <div class="big-letter">${item.letra}</div>
+        <div class="big-letter">
+          ${item.letra}
+        </div>
 
         ${construirAlternativas(item, "palavra")}
       `;
@@ -547,7 +479,9 @@ function construirAlternativas(item, tipo) {
     // FASE 4: ESCREVER
     else {
       conteudo = `
-        <span class="question-kicker">Pratique a escrita</span>
+        <span class="question-kicker">
+          Pratique a escrita
+        </span>
 
         <h2 class="question-title">
           Digite a letra que você ouviu.
@@ -610,13 +544,6 @@ function construirAlternativas(item, tipo) {
 
         respondida = true;
         acertosPartida++;
-        pontosPartida += 10;
-
-        sequencia++;
-        melhorSequencia = Math.max(
-          melhorSequencia,
-          sequencia
-        );
 
         mostrarFeedback(
           "Muito bem! Você conheceu mais uma letra.",
@@ -625,8 +552,6 @@ function construirAlternativas(item, tipo) {
 
         $("btn-verificar").classList.add("hidden");
         $("btn-proxima").classList.remove("hidden");
-
-        atualizarPontos();
       });
     }
 
@@ -650,12 +575,8 @@ function construirAlternativas(item, tipo) {
   }
 
   // ==========================================
-  // 12. FEEDBACK E PONTUAÇÃO
+  // 12. FEEDBACK
   // ==========================================
-
-  function atualizarPontos() {
-    $("pontos-atual").textContent = pontosPartida;
-  }
 
   function mostrarFeedback(texto, sucesso) {
     const caixa = $("feedback");
@@ -707,15 +628,7 @@ function construirAlternativas(item, tipo) {
 
     if (correta) {
       respondida = true;
-
       acertosPartida++;
-      pontosPartida += 10;
-      sequencia++;
-
-      melhorSequencia = Math.max(
-        melhorSequencia,
-        sequencia
-      );
 
       const mensagens = [
         "Muito bem! Você acertou!",
@@ -723,22 +636,16 @@ function construirAlternativas(item, tipo) {
         "Isso mesmo! Você encontrou a letra!"
       ];
 
-      let mensagem =
+      const mensagem =
         mensagens[Math.floor(Math.random() * mensagens.length)];
-
-      if (sequencia === 3) {
-        mensagem += " Sequência de 3 acertos!";
-      }
 
       mostrarFeedback(mensagem, true);
       marcarAlternativa(item.letra, "correct");
 
       $("btn-verificar").classList.add("hidden");
       $("btn-proxima").classList.remove("hidden");
-    } else {
-      errosPartida++;
-      sequencia = 0;
 
+    } else {
       mostrarFeedback(
         "Quase! Escute novamente e tente mais uma vez.",
         false
@@ -750,8 +657,6 @@ function construirAlternativas(item, tipo) {
 
       reproduzirAudio(item);
     }
-
-    atualizarPontos();
   }
 
   // ==========================================
@@ -775,28 +680,13 @@ function construirAlternativas(item, tipo) {
   // ==========================================
 
   function finalizarFase() {
-    salvarProgresso();
-
-    const totalRespostas =
-      acertosPartida + errosPartida;
-
-    const precisao = totalRespostas
-      ? Math.round(
-          (acertosPartida / totalRespostas) * 100
-        )
-      : 0;
-
     const resultado = {
       id: Date.now().toString(),
       nome: nomeAluno || "Sem nome",
       fase: FASES[faseAtual - 1].nome,
       faseId: faseAtual,
       acertos: acertosPartida,
-      erros: errosPartida,
-      pontos: pontosPartida,
-      precisao,
-      data: new Date().toISOString(),
-      melhorSequencia
+      data: new Date().toISOString()
     };
 
     const historico = lerResultados();
@@ -814,19 +704,35 @@ function construirAlternativas(item, tipo) {
         : "Muito bem por chegar até aqui!";
 
     $("resultado-mensagem").textContent =
-      faseAtual === 5
-        ? "Você completou o desafio final. Continue praticando!"
-        : `Você concluiu a fase ${faseAtual}: ${
-            FASES[faseAtual - 1].nome
-          }. A próxima etapa está pronta!`;
+      `Você acertou ${acertosPartida} de ${perguntasAtuais.length} questões!`;
 
-    $("resultado-pontos").textContent = pontosPartida;
-    $("resultado-acertos").textContent = acertosPartida;
-    $("resultado-erros").textContent = errosPartida;
-    $("resultado-percentual").textContent = `${precisao}%`;
+    if ($("resultado-acertos")) {
+      $("resultado-acertos").textContent = acertosPartida;
+    }
+
+    // Esconde campos antigos de pontuação, erros e precisão.
+    [
+      "resultado-pontos",
+      "resultado-erros",
+      "resultado-percentual"
+    ].forEach((id) => {
+      const elemento = $(id);
+
+      if (elemento) {
+        const cartao = elemento.closest(
+          ".summary-card, .result-card, .stat-card"
+        );
+
+        if (cartao) {
+          cartao.classList.add("hidden");
+        } else {
+          elemento.classList.add("hidden");
+        }
+      }
+    });
 
     $("resultado-detalhe").innerHTML = `
-      <h3>Resumo desta partida</h3>
+      <h3>Resultado desta atividade</h3>
 
       <div class="detail-row">
         <span>Atividade</span>
@@ -839,8 +745,8 @@ function construirAlternativas(item, tipo) {
       </div>
 
       <div class="detail-row">
-        <span>Maior sequência de acertos</span>
-        <strong>${melhorSequencia}</strong>
+        <span>Total de acertos</span>
+        <strong>${acertosPartida}</strong>
       </div>
     `;
 
@@ -861,44 +767,31 @@ function construirAlternativas(item, tipo) {
     const todos = lerResultados();
 
     const lista = todos.filter((resultado) =>
-      resultado.nome.toLowerCase().includes(filtro)
+      (resultado.nome || "").toLowerCase().includes(filtro)
     );
 
-    const totalPontos = lista.reduce(
-      (soma, resultado) => soma + resultado.pontos,
+    const totalAcertos = lista.reduce(
+      (soma, resultado) =>
+        soma + Number(resultado.acertos || 0),
       0
     );
 
-    const media = lista.length
-      ? Math.round(
-          lista.reduce(
-            (soma, resultado) => soma + resultado.precisao,
-            0
-          ) / lista.length
-        )
-      : 0;
-
     $("resumo-professor").innerHTML = `
       <div class="summary-card">
-        <small>Partidas registradas</small>
+        <small>Atividades registradas</small>
         <strong>${lista.length}</strong>
       </div>
 
       <div class="summary-card">
-        <small>Pontos acumulados</small>
-        <strong>${totalPontos}</strong>
-      </div>
-
-      <div class="summary-card">
-        <small>Média de precisão</small>
-        <strong>${media}%</strong>
+        <small>Total de acertos</small>
+        <strong>${totalAcertos}</strong>
       </div>
     `;
 
     if (!lista.length) {
       $("tabela-resultados").innerHTML = `
         <tr>
-          <td colspan="7" class="empty-row">
+          <td colspan="4" class="empty-row">
             Nenhum resultado registrado ainda.
             Conclua uma atividade para começar.
           </td>
@@ -913,10 +806,7 @@ function construirAlternativas(item, tipo) {
         <tr>
           <td>${escapar(resultado.nome)}</td>
           <td>${escapar(resultado.fase)}</td>
-          <td>${resultado.acertos}</td>
-          <td>${resultado.erros}</td>
-          <td>${resultado.pontos}</td>
-          <td>${resultado.precisao}%</td>
+          <td>${Number(resultado.acertos || 0)}</td>
           <td>
             ${new Date(resultado.data).toLocaleString("pt-BR")}
           </td>
@@ -946,9 +836,6 @@ function construirAlternativas(item, tipo) {
         "Aluno",
         "Atividade",
         "Acertos",
-        "Tentativas incorretas",
-        "Pontos",
-        "Precisao",
         "Data"
       ]
     ];
@@ -957,10 +844,7 @@ function construirAlternativas(item, tipo) {
       linhas.push([
         resultado.nome,
         resultado.fase,
-        resultado.acertos,
-        resultado.erros,
-        resultado.pontos,
-        `${resultado.precisao}%`,
+        Number(resultado.acertos || 0),
         new Date(resultado.data).toLocaleString("pt-BR")
       ]);
     });
@@ -1070,8 +954,8 @@ function construirAlternativas(item, tipo) {
     abrirModal(
       "Nome salvo",
       nomeAluno
-        ? `As próximas partidas serão registradas como "${nomeAluno}".`
-        : "As próximas partidas serão registradas sem nome."
+        ? `As próximas atividades serão registradas como "${nomeAluno}".`
+        : "As próximas atividades serão registradas sem nome."
     );
   });
 
@@ -1118,4 +1002,5 @@ function construirAlternativas(item, tipo) {
   if ("speechSynthesis" in window) {
     window.speechSynthesis.getVoices();
   }
+
 })();
