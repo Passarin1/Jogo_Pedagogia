@@ -107,12 +107,9 @@
       <div class="section-heading">
         <span class="eyebrow">SUA JORNADA</span>
         <h1>Escolha uma atividade</h1>
-        <p>Você pode escolher qualquer atividade e jogar na ordem que preferir.</p>
+        <p>Escolha uma atividade para começar. Você pode jogar em qualquer ordem.</p>
       </div>
-
-      <div id="progresso-jornada" class="journey-progress"></div>
       <div id="lista-fases" class="phase-grid"></div>
-
       <div class="center-actions">
         <button class="btn btn-ghost" data-go-home>Voltar ao início</button>
       </div>
@@ -124,14 +121,11 @@
           ← Atividades
         </button>
         <div class="game-stats">
-          <span id="fase-atual-label">Atividade 1</span>
+          <span id="fase-atual-label">Fase 1</span>
         </div>
       </div>
 
-      <div class="question-progress">
-        <div id="barra-progresso"></div>
-      </div>
-
+      <div class="question-progress"><div id="barra-progresso"></div></div>
       <div class="question-meta">
         <span id="pergunta-contador">Atividade 1</span>
         <span id="tentativas-label">Pode tentar novamente</span>
@@ -141,43 +135,37 @@
       <div id="feedback" class="feedback hidden" role="status" aria-live="polite"></div>
 
       <div class="game-footer">
-        <button class="btn btn-secondary" id="btn-ouvir">
-          🔊 Ouvir novamente
-        </button>
-        <button class="btn btn-primary" id="btn-verificar">
-          Conferir resposta
-        </button>
-        <button class="btn btn-primary hidden" id="btn-proxima">
-          Próxima →
-        </button>
+        <button class="btn btn-secondary" id="btn-ouvir">🔊 Ouvir novamente</button>
+        <button class="btn btn-primary" id="btn-verificar">Conferir resposta</button>
+        <button class="btn btn-primary hidden" id="btn-proxima">Próxima →</button>
       </div>
     </section>
 
     <section id="tela-resultado" class="screen hidden">
       <div class="result-hero">
         <div class="result-medal">🏆</div>
-        <span class="eyebrow">ATIVIDADE CONCLUÍDA</span>
+        <span class="eyebrow">JORNADA CONCLUÍDA</span>
         <h1 id="resultado-titulo">Parabéns!</h1>
         <p id="resultado-mensagem">Você terminou a atividade.</p>
       </div>
 
       <div class="result-stats">
         <article class="result-stat">
-          <span>✅</span>
-          <strong id="resultado-acertos">0</strong>
-          <small>Acertos</small>
+          <span>✅</span><strong id="resultado-acertos">0</strong><small>Acertos</small>
+        </article>
+        <article class="result-stat">
+          <span>🔁</span><strong id="resultado-erros">0</strong><small>Tentativas incorretas</small>
+        </article>
+        <article class="result-stat">
+          <span>📈</span><strong id="resultado-percentual">0%</strong><small>Precisão</small>
         </article>
       </div>
 
       <div class="result-detail" id="resultado-detalhe"></div>
 
       <div class="center-actions">
-        <button class="btn btn-primary" id="btn-voltar-fases">
-          Ver atividades
-        </button>
-        <button class="btn btn-secondary" id="btn-jogar-novamente">
-          Jogar novamente
-        </button>
+        <button class="btn btn-primary" id="btn-voltar-fases">Ver jornada</button>
+        <button class="btn btn-secondary" id="btn-jogar-novamente">Jogar novamente</button>
       </div>
     </section>
 
@@ -186,7 +174,7 @@
         <span class="eyebrow">ACOMPANHAMENTO</span>
         <h1>Área do professor</h1>
         <p>
-          Veja os acertos registrados neste navegador.
+          Veja os resultados registrados neste navegador.
           Esta versão não envia dados para a internet.
         </p>
       </div>
@@ -194,38 +182,19 @@
       <div class="teacher-toolbar">
         <label class="field-label" for="filtro-aluno">
           Filtrar por nome
-          <input
-            id="filtro-aluno"
-            type="search"
-            placeholder="Digite o nome do aluno"
-          >
+          <input id="filtro-aluno" type="search" placeholder="Digite o nome do aluno">
         </label>
-
-        <button class="btn btn-secondary" id="btn-exportar">
-          Exportar CSV
-        </button>
-
-        <button class="btn btn-ghost" id="btn-limpar-resultados">
-          Limpar histórico
-        </button>
+        <button class="btn btn-secondary" id="btn-exportar">Exportar CSV</button>
+        <button class="btn btn-ghost" id="btn-limpar-resultados">Limpar histórico</button>
       </div>
 
       <form id="form-aluno" class="student-form">
         <label class="field-label" for="nome-aluno">
           Nome do aluno (opcional)
-          <input
-            id="nome-aluno"
-            type="text"
-            maxlength="60"
-            placeholder="Ex.: Ana"
-          >
+          <input id="nome-aluno" type="text" maxlength="60" placeholder="Ex.: Ana">
         </label>
-
         <p>O nome será associado às próximas partidas neste navegador.</p>
-
-        <button class="btn btn-primary" type="submit">
-          Salvar nome
-        </button>
+        <button class="btn btn-primary" type="submit">Salvar nome</button>
       </form>
 
       <div class="teacher-summary" id="resumo-professor"></div>
@@ -237,22 +206,18 @@
               <th>Aluno</th>
               <th>Atividade</th>
               <th>Acertos</th>
+              <th>Tentativas incorretas</th>
+              <th>Precisão</th>
               <th>Data</th>
             </tr>
           </thead>
-
           <tbody id="tabela-resultados"></tbody>
         </table>
       </div>
 
       <div class="center-actions">
-        <button class="btn btn-ghost" data-go-home>
-          Voltar ao início
-        </button>
-
-        <button class="btn btn-primary" id="btn-jogar-professor">
-          Iniciar jogo
-        </button>
+        <button class="btn btn-ghost" data-go-home>Voltar ao início</button>
+        <button class="btn btn-primary" id="btn-jogar-professor">Iniciar jogo</button>
       </div>
     </section>
   </main>
@@ -266,9 +231,7 @@
     <div class="modal-icon">💡</div>
     <h2 id="modal-titulo">Dica</h2>
     <p id="modal-texto"></p>
-    <button class="btn btn-primary" id="btn-fechar-modal">
-      Vamos lá!
-    </button>
+    <button class="btn btn-primary" id="btn-fechar-modal">Vamos lá!</button>
   </dialog>
 </body>
 </html>
